@@ -1,6 +1,5 @@
 from flask_login import UserMixin
 from datetime import datetime
-from sirope import OID  # Import OID class
 
 
 class User(UserMixin):
@@ -11,13 +10,6 @@ class User(UserMixin):
 
     def get_id(self):
         return self.username
-
-    def to_dict(self):
-        return {
-            "username": self.username,
-            "email": self.email,
-            "password": self.password
-        }
 
     @classmethod
     def from_dict(cls, data):
@@ -49,14 +41,3 @@ class Post:
             "paper_id": self.paper_id,
             "timestamp": self.timestamp.isoformat()
         }
-
-    @classmethod
-    def from_dict(cls, data):
-        post = cls(
-            data["content"],
-            data["user_id"],
-            data["paper_id"]
-        )
-        post._id = OID.from_text(data["_id"])
-        post.timestamp = datetime.fromisoformat(data["timestamp"])
-        return post
