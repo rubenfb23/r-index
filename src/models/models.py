@@ -1,7 +1,6 @@
 from flask_login import UserMixin
 from datetime import datetime
 from sirope import OID  # Import OID class
-import uuid
 
 
 class User(UserMixin):
@@ -35,15 +34,12 @@ class Paper:
 
 
 class Post:
-    def __init__(self, content, user_id, paper_id):
-        self._id = OID(Post, uuid.uuid4().int)  # Use OID class
+    def __init__(self, content, user_id, paper_id, score):
         self.content = content
         self.user_id = user_id
         self.paper_id = paper_id
+        self.score = score
         self.timestamp = datetime.now()
-
-    def get_id(self):
-        return self._id
 
     def to_dict(self):
         return {
