@@ -141,4 +141,4 @@ unittest
 
 ## Licencia
 
-Este proyecto está licenciado bajo los términos de la licencia MIT. Para más detalles, consulta el archivo `LICENSE`.
+Este proyecto está licenciado bajo los términos de la licencia AGPL-3.0. Para más detalles, consulta el archivo `LICENSE`.
