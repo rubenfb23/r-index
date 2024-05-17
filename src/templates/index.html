@@ -1,6 +1,30 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}Landing Page{% endblock %}
 {% block content %}
-    <h2>Welcome to Paper Reviews</h2>
-    <p>Your platform to share and review scientific papers.</p>
+    <div class="papers-container">
+        {% for item in paper_reviews %}
+            <div class="paper-box">
+                <h3>{{ item.paper.title }}</h3>
+                <p>{{ item.paper.summary }}</p>
+                <p>Authors: {{ item.paper.authors }}</p>
+                <p>Publication Date: {{ item.paper.publication_date }}</p>
+                <p>URL: <a href="{{ item.paper.url }}">{{ item.paper.url }}</a></p>
+                <p>Number of Reviews: {{ item.num_reviews }}</p>
+                <p>Average Review Score: {{ item.avg_score }} / 5</p>
+                <div class="stars">
+                    {% for i in range(1, 6) %}
+                        {% if item.avg_score >= i %}
+                            <span class="star">&#9733;</span>
+                        {% elif item.avg_score >= i - 0.5 %}
+                            <span class="star">&#9733;</span>
+                        {% else %}
+                            <span class="star">&#9734;</span>
+                        {% endif %}
+                    {% endfor %}
+                    <button> <a href="{{ url_for('paper_detail', paper_id=item.paper.__oid__) }}">View Reviews</a></button>
+                </div>
+                <hr>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
