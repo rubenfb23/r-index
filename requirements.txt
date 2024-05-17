@@ -1,0 +1,4 @@
+Flask==3.0.3
+Flask-Login==0.6.3
+redis==5.0.4
+sirope==0.3.1
