@@ -2,7 +2,6 @@ from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 import sirope
 from models import User, Paper, Post
-from sirope import OID  # Import OID class
 
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'
@@ -59,28 +58,53 @@ def logout():
 @app.route('/')
 @login_required
 def index():
-    return render_template('index.html')
+    papers = list(s.load_all(Paper))
+    paper_reviews = []
+
+    for paper in papers:
+        reviews = list(s.load_all(Post))
+        paper.__oid__ = s.safe_from_oid(paper.__oid__)
+        reviews = [review for review in reviews if review.paper_id == paper.__oid__]
+
+        if reviews:
+            avg_score = round(sum([review.score for review in reviews]) / len(reviews),2)
+        else:
+            avg_score = 0
+        paper_reviews.append({
+            'paper': paper,
+            'avg_score': avg_score,
+            'reviews': reviews,
+            'num_reviews': len(reviews)
+        })
+
+    return render_template('index.html', paper_reviews=paper_reviews)
 
 @app.route('/papers')
 @login_required
 def papers():
     papers = list(s.load_all(Paper))
+    papers_from_user = []
     for paper in papers:
         paper.__oid__ = s.safe_from_oid(paper.__oid__)
-    return render_template('papers.html', papers=papers)
+        if paper.authors == current_user.username:
+            papers_from_user.append(paper)
+    return render_template('papers.html', papers=papers_from_user)
 
 @app.route('/paper/<paper_id>')
 @login_required
 def paper_detail(paper_id):
     paper_oid = s.oid_from_safe(paper_id)
     paper = s.load(paper_oid)
-    print(f'Loaded Paper ID: {paper_id}, Title: {paper.title}')  # Depuración
     if paper:
         posts = list(s.load_all(Post))
+        for post in posts:
+            post.__oid__ = s.safe_from_oid(post.__oid__)
+        paper.__oid__ = s.safe_from_oid(paper.__oid__)
         return render_template('paper_detail.html', paper=paper, posts=posts)
     else:
         flash('Paper not found.')
         return redirect(url_for('papers'))
+
 
 @app.route('/add_paper', methods=['GET', 'POST'])
 @login_required
@@ -141,14 +165,20 @@ def delete_paper(paper_id):
 @app.route('/add_post/<paper_id>', methods=['GET', 'POST'])
 @login_required
 def add_post(paper_id):
-    if request.method == 'POST':
-        content = request.form['content']
-        user_id = current_user.username
-        new_post = Post(content, user_id, paper_id)
-        s.save(new_post)
-        flash('Review added successfully.')
-        return redirect(url_for('paper_detail', paper_id=paper_id))
-    return render_template('add_post.html', paper_id=paper_id)
+    paper_oid = s.oid_from_safe(paper_id)
+    if s.exists(paper_oid):
+        if request.method == 'POST':
+            content = request.form['content']
+            score = float(request.form['score'])
+            new_post = Post(content, current_user.username, paper_id, score)
+            s.save(new_post)
+            flash('Review added successfully.')
+            return redirect(url_for('paper_detail', paper_id=paper_id))
+        return render_template('add_post.html', paper=paper)
+    else:
+        flash('Paper not found.')
+        return redirect(url_for('papers'))
+
 
 @app.route('/edit_post/<post_id>', methods=['GET', 'POST'])
 @login_required
