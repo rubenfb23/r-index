@@ -62,14 +62,14 @@ def index():
     paper_reviews = []
 
     for paper in papers:
-        reviews = list(s.load_all(Post))
         paper.__oid__ = s.safe_from_oid(paper.__oid__)
-        reviews = [review for review in reviews if review.paper_id == paper.__oid__]
+        reviews = list(s.filter(Post, lambda p: p.paper_id == paper.__oid__))
 
         if reviews:
-            avg_score = round(sum([review.score for review in reviews]) / len(reviews),2)
+            avg_score = round(sum([review.score for review in reviews]) / len(reviews), 2)
         else:
             avg_score = 0
+
         paper_reviews.append({
             'paper': paper,
             'avg_score': avg_score,
@@ -82,33 +82,34 @@ def index():
 @app.route('/papers')
 @login_required
 def papers():
-    papers = list(s.load_all(Paper))
-    papers_from_user = []
+    user_id = current_user.get_id()
+    papers = list(s.filter(Paper, lambda p: p.user_id == user_id))
     for paper in papers:
         paper.__oid__ = s.safe_from_oid(paper.__oid__)
-        if paper.authors == current_user.username:
-            papers_from_user.append(paper)
-    return render_template('papers.html', papers=papers_from_user)
+    return render_template('papers.html', papers=papers)
 
 @app.route('/paper/<paper_id>')
 @login_required
 def paper_detail(paper_id):
     paper_oid = s.oid_from_safe(paper_id)
-    user = s.load(current_user.__oid__)
     paper = s.load(paper_oid)
+    user = current_user
     user_has_reviewed = False
+    is_author = False
+
     if paper:
-        posts = list(s.load_all(Post))
+        is_author = user.get_id() in paper.authors.split(", ")
+        posts = list(s.filter(Post, lambda p: p.paper_id == paper_oid))
+        
         for post in posts:
-            post.__oid__ = s.safe_from_oid(post.__oid__)
-            if post.user_id == user.username and post.paper_id == paper_id:
+            if post.user_id == user.get_id():
                 user_has_reviewed = True
-        paper.__oid__ = s.safe_from_oid(paper.__oid__)
-        return render_template('paper_detail.html', paper=paper, posts=posts, user=user, user_has_reviewed=user_has_reviewed)
+                break
+        
+        return render_template('paper_detail.html', paper=paper, posts=posts, user=user, user_has_reviewed=user_has_reviewed, is_author=is_author)
     else:
         flash('Paper not found.')
         return redirect(url_for('papers'))
-
 
 @app.route('/add_paper', methods=['GET', 'POST'])
 @login_required
@@ -119,9 +120,9 @@ def add_paper():
         url = request.form['url']
         publication_date = request.form['publication_date']
         authors = request.form['authors']
-        new_paper = Paper(title, summary, url, publication_date, authors)
-        saved_paper = s.save(new_paper)  # Save the object directly
-        s.load(saved_paper)  # Load the last saved object
+        user_id = current_user.get_id()
+        new_paper = Paper(title, summary, url, publication_date, authors, user_id)
+        saved_paper = s.save(new_paper)
         if saved_paper:
             print(f'Paper saved: {saved_paper}')
         else:
@@ -134,7 +135,7 @@ def add_paper():
 @login_required
 def edit_paper(paper_id):
     paper_oid = s.oid_from_safe(paper_id)
-    paper = s.load(paper_oid)  # Load the object
+    paper = s.load(paper_oid)
     if paper:
         if request.method == 'POST':
             paper.title = request.form['title']
@@ -142,7 +143,7 @@ def edit_paper(paper_id):
             paper.url = request.form['url']
             paper.publication_date = request.form['publication_date']
             paper.authors = request.form['authors']
-            s.save(paper)  # Save the object directly
+            s.save(paper)
             flash('Paper updated successfully.')
             return redirect(url_for('paper_detail', paper_id=paper_id))
         return render_template('edit_paper.html', paper=paper)
@@ -154,12 +155,12 @@ def edit_paper(paper_id):
 @login_required
 def delete_paper(paper_id):
     paper_oid = s.oid_from_safe(paper_id)
-    paper = s.load(paper_oid)  # Load the object
+    paper = s.load(paper_oid)
     if paper:
-        s.delete(paper)  # Delete the object directly
-        posts = list(s.find_all(Post, lambda p: p.paper_id == paper_id))
+        s.delete(paper)
+        posts = list(s.filter(Post, lambda p: p.paper_id == paper_oid))
         for post in posts:
-            s.delete(post)  # Delete associated posts
+            s.delete(post)
         flash('Paper and associated reviews deleted successfully.')
         return redirect(url_for('papers'))
     else:
@@ -178,21 +179,20 @@ def add_post(paper_id):
             s.save(new_post)
             flash('Review added successfully.')
             return redirect(url_for('paper_detail', paper_id=paper_id))
-        return render_template('add_post.html', paper=paper)
+        return render_template('add_post.html')
     else:
         flash('Paper not found.')
         return redirect(url_for('papers'))
-
 
 @app.route('/edit_post/<post_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_id):
     post_oid = s.oid_from_safe(post_id)
-    post = s.load(post_oid)  # Load the object
+    post = s.load(post_oid)
     if post:
         if request.method == 'POST':
             post.content = request.form['content']
-            s.save(post)  # Save the object directly
+            s.save(post)
             flash('Review updated successfully.')
             return redirect(url_for('paper_detail', paper_id=post.paper_id))
         return render_template('edit_post.html', post=post)
@@ -204,10 +204,10 @@ def edit_post(post_id):
 @login_required
 def delete_post(post_id):
     post_oid = s.oid_from_safe(post_id)
-    post = s.load(post_oid)  # Load the object
+    post = s.load(post_oid)
     if post:
         paper_id = post.paper_id
-        s.delete(post)  # Delete the object directly
+        s.delete(post_oid)
         flash('Review deleted successfully.')
         return redirect(url_for('paper_detail', paper_id=paper_id))
     else:
