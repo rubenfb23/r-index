@@ -94,13 +94,17 @@ def papers():
 @login_required
 def paper_detail(paper_id):
     paper_oid = s.oid_from_safe(paper_id)
+    user = s.load(current_user.__oid__)
     paper = s.load(paper_oid)
+    user_has_reviewed = False
     if paper:
         posts = list(s.load_all(Post))
         for post in posts:
             post.__oid__ = s.safe_from_oid(post.__oid__)
+            if post.user_id == user.username and post.paper_id == paper_id:
+                user_has_reviewed = True
         paper.__oid__ = s.safe_from_oid(paper.__oid__)
-        return render_template('paper_detail.html', paper=paper, posts=posts)
+        return render_template('paper_detail.html', paper=paper, posts=posts, user=user, user_has_reviewed=user_has_reviewed)
     else:
         flash('Paper not found.')
         return redirect(url_for('papers'))

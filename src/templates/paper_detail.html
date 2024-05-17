@@ -7,6 +7,9 @@
         <p>Authors: {{ paper.authors }}</p>
         <p>Publication Date: {{ paper.publication_date }}</p>
         <p>URL: <a href="{{ paper.url }}">{{ paper.url }}</a></p>
+        {% if paper.authors == user.username %}
+            <button>Edit</button>
+        {% endif %}
         <div class="reviews">
             <h3>Reviews:</h3>
             {% for post in posts %}
@@ -31,6 +34,7 @@
                 {% endif %}
             {% endfor %}
         </div>
+        {% if not user_has_reviewed %}
         <div class="add-review">
             <h3>Add a Review:</h3>
             <form method="POST" action="{{ url_for('add_post', paper_id=paper.__oid__) }}">
@@ -42,5 +46,6 @@
                 <button type="submit">Submit</button>
             </form>
         </div>
+        {% endif %}
     </div>
 {% endblock %}
