@@ -21,8 +21,8 @@
                             <span class="star">&#9734;</span>
                         {% endif %}
                     {% endfor %}
-                    <button> <a href="{{ url_for('paper_detail', paper_id=item.paper.__oid__) }}">View Reviews</a></button>
                 </div>
+                <button><a href="{{ url_for('paper_detail', paper_id=item.paper.__oid__) }}">View Reviews</a></button>
                 <hr>
             </div>
         {% endfor %}
