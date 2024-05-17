@@ -1,2 +1,2 @@
-# r-index-Web-App-to-share-and-review-scientific-papers-
+# r-index
 Web App to share and review scientific papers
