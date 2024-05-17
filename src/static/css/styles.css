@@ -40,7 +40,8 @@ form label {
     margin-bottom: 5px;
 }
 
-form input, form textarea {
+form input,
+form textarea {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
@@ -58,5 +59,29 @@ form input[type="submit"] {
 }
 
 form input[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: #5aa6f8;
+}
+
+.papers-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.paper-box {
+    width: 80%;
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stars {
+    color: #ffd700;
+    font-size: 1.5em;
+}
+
+.star {
+    margin: 0 2px;
 }
