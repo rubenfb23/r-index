@@ -83,7 +83,7 @@ def index():
 @login_required
 def papers():
     user_id = current_user.get_id()
-    papers = list(s.filter(Paper, lambda p: p.user_id == user_id))
+    papers = list(s.filter(Paper, lambda p: p.authors == user_id))
     for paper in papers:
         paper.__oid__ = s.safe_from_oid(paper.__oid__)
     return render_template('papers.html', papers=papers)
@@ -99,13 +99,14 @@ def paper_detail(paper_id):
 
     if paper:
         is_author = user.get_id() in paper.authors.split(", ")
-        posts = list(s.filter(Post, lambda p: p.paper_id == paper_oid))
+        posts = list(s.filter(Post, lambda p: p.paper_id == paper_id))
         
         for post in posts:
+            post.__oid__ = s.safe_from_oid(post.__oid__)
             if post.user_id == user.get_id():
                 user_has_reviewed = True
                 break
-        
+        paper.__oid__ = s.safe_from_oid(paper.__oid__)
         return render_template('paper_detail.html', paper=paper, posts=posts, user=user, user_has_reviewed=user_has_reviewed, is_author=is_author)
     else:
         flash('Paper not found.')
