@@ -4,11 +4,11 @@
     <div class="papers-container">
         {% for item in paper_reviews %}
             <div class="paper-box">
-                <h3>{{ item.paper.title }}</h3>
+                <h2>{{ item.paper.title }}</h2>
                 <p>{{ item.paper.summary }}</p>
                 <p>Authors: {{ item.paper.authors }}</p>
                 <p>Publication Date: {{ item.paper.publication_date }}</p>
-                <p>URL: <a href="{{ item.paper.url }}">{{ item.paper.url }}</a></p>
+                <p>ArXiv: <a href="{{ item.paper.url }}">{{ item.paper.url }}</a></p>
                 <p>Number of Reviews: {{ item.num_reviews }}</p>
                 <p>Average Review Score: {{ item.avg_score }} / 5</p>
                 <div class="stars">
