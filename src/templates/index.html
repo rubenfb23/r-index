@@ -8,7 +8,7 @@
                 <p>{{ item.paper.summary }}</p>
                 <p>Authors: {{ item.paper.authors }}</p>
                 <p>Publication Date: {{ item.paper.publication_date }}</p>
-                <p>ArXiv: <a href="{{ item.paper.url }}">{{ item.paper.url }}</a></p>
+                <p>Link: <a href="https://{{ item.paper.url }}">{{ item.paper.url }}</a></p>
                 <p>Number of Reviews: {{ item.num_reviews }}</p>
                 <p>Average Review Score: {{ item.avg_score }} / 5</p>
                 <div class="stars">
