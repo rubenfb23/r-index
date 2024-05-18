@@ -1,11 +1,14 @@
-/* app/static/css/styles.css */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
 }
 
 header {
-    background-color: #f8f9fa;
-    padding: 10px 0;
+    background-color: #e3f2fd;
+    padding: 20px 0;
     border-bottom: 1px solid #ddd;
 }
 
@@ -13,12 +16,16 @@ header h1 {
     margin: 0;
     padding: 0;
     text-align: center;
+    color: #3f51b5;
 }
 
 nav ul {
     list-style-type: none;
     padding: 0;
     text-align: center;
+    background-color: #bbdefb;
+    margin: 0;
+    padding: 10px 0;
 }
 
 nav ul li {
@@ -26,40 +33,61 @@ nav ul li {
     margin-right: 20px;
 }
 
+nav ul li a {
+    text-decoration: none;
+    color: #3f51b5;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    color: #1a237e;
+}
+
 main {
-    margin: 20px;
+    margin: 20px auto;
+    max-width: 900px;
 }
 
 form {
-    max-width: 400px;
+    max-width: 600px;
     margin: auto;
+    background-color: #e3f2fd;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 form label {
     display: block;
     margin-bottom: 5px;
+    color: #1a237e;
 }
 
 form input,
 form textarea {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
+    padding: 10px;
+    margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 form input[type="submit"] {
     width: auto;
-    background-color: #007bff;
+    background-color: #42a5f5;
     color: white;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
+    border-radius: 4px;
 }
 
 form input[type="submit"]:hover {
-    background-color: #5aa6f8;
+    background-color: #1e88e5;
+}
+
+.add-review {
+    display: auto;
 }
 
 .papers-container {
@@ -71,10 +99,28 @@ form input[type="submit"]:hover {
 .paper-box {
     width: 80%;
     padding: 20px;
-    margin: 10px;
+    margin: 10px 0;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
+    background-color: #e3f2fd;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.paper-box h3 {
+    color: #1a237e;
+}
+
+.paper-box p {
+    color: #1a237e;
+}
+
+.paper-box a {
+    color: #1a237e;
+    text-decoration: none;
+}
+
+.paper-box a:hover {
+    text-decoration: underline;
 }
 
 .stars {
@@ -82,6 +128,41 @@ form input[type="submit"]:hover {
     font-size: 1.5em;
 }
 
+.form_dlt {
+    background-color: white;
+    padding: 0;
+}
+
 .star {
     margin: 0 2px;
+}
+
+.delete_btn {
+    background-color: #f44336;
+    color: white;
+    border: double;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+
+}
+
+button {
+    background-color: #42a5f5;
+    color: white;
+    border: double;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+button:hover {
+    background-color: #1e88e5;
+}
+
+button a {
+    color: white;
+    text-decoration: none;
 }
