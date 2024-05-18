@@ -1,4 +1,3 @@
-<!-- app/templates/paper_detail.html -->
 {% extends "base.html" %}
 {% block title %}{{ paper.title }}{% endblock %}
 {% block content %}
@@ -9,6 +8,12 @@
         <p>Publication Date: {{ paper.publication_date }}</p>
         <p>URL: <a href="{{ paper.url }}">{{ paper.url }}</a></p>
         
+        {% if paper.authors == user.get_id() %}
+            <form method="POST" class="form_dlt" action="{{ url_for('delete_paper', paper_id=paper.__oid__) }}" style="display:inline;">
+                <button type="submit" class="delete_btn">Delete Paper</button>
+            </form>
+        {% endif %}
+
         <div class="reviews">
             <h3>Reviews:</h3>
             {% for post in posts %}
@@ -28,8 +33,8 @@
                     <p>{{ post.content }}</p>
                     <p><small>{{ post.timestamp }}</small></p>
                     {% if post.user_id == user.get_id() %}
-                        <form method="POST" action="{{ url_for('delete_post', post_id=post._id) }}" style="display:inline;">
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                        <form method="POST" class="form_dlt" action="{{ url_for('delete_post', post_id=post.__oid__) }}" style="display:inline;">
+                            <button type="submit" class="delete_btn">Delete Post</button>
                         </form>
                     {% endif %}
                 </div>
