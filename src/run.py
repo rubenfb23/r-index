@@ -208,8 +208,7 @@ def add_paper():
         url = request.form['url']
         publication_date = request.form['publication_date']
         authors = request.form['authors']
-        user_id = current_user.get_id()
-        new_paper = Paper(title, summary, url, publication_date, authors, user_id)
+        new_paper = Paper(title, summary, url, publication_date, authors)
         saved_paper = s.save(new_paper)
         if saved_paper:
             print(f'Paper saved: {saved_paper}')
