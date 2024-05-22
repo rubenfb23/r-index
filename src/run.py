@@ -274,7 +274,7 @@ def delete_paper(paper_id):
     paper_oid = s.oid_from_safe(paper_id)
     paper = s.load(paper_oid)
     if paper:
-        s.delete(paper)
+        s.delete(paper_oid)
         posts = list(s.filter(Post, lambda p: p.paper_id == paper_oid))
         for post in posts:
             s.delete(post)
