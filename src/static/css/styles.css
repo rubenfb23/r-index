@@ -43,8 +43,8 @@ nav ul li a:hover {
 }
 
 main {
-    margin: 20px auto;
-    max-width: 900px;
+    margin: auto;
+    max-width: 95%;
 }
 
 form {
@@ -87,11 +87,12 @@ form input[type="submit"]:hover {
 }
 
 .main_box {
+    margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    width: 95%;
+    width: 100%;
     align-items: flex-start;
 }
 
@@ -129,7 +130,7 @@ form input[type="submit"]:hover {
 }
 
 .sponsors {
-    height: 100%;
+    margin-top: 1rem;
 }
 
 .header_header {
