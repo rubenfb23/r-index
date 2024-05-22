@@ -8,14 +8,21 @@
 </head>
 <body>
     <header>
-        <h1>R-Index</h1>
+        <div class="header_header">
+        <h1 class="title_header">R-Index</h1>
+        <div class="user_header"> 
+            {% if current_user.is_authenticated %} 
+            <p>Welcome, {{ current_user.username }}</p> 
+            <button class="logout"><a href="{{ url_for('logout') }}">Logout</a></button>
+            {% endif %} 
+        </div>
+        </div>
         <nav>
             <ul>
                 <li><a href="{{ url_for('index') }}">Home</a></li>
                 <li><a href="{{ url_for('papers') }}">Papers</a></li>
                 {% if current_user.is_authenticated %}
                     <li><a href="{{ url_for('add_paper') }}">Add Paper</a></li>
-                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
                 {% else %}
                     <li><a href="{{ url_for('login') }}">Login</a></li>
                     <li><a href="{{ url_for('register') }}">Register</a></li>
