@@ -9,7 +9,7 @@
         {% for item in paper_reviews %}
             <div class="paper-box">
                 <h2>{{ item.paper.title }}</h2>
-                <p>{{ item.paper.summary }}</p>
+                <p class="summary">{{ item.paper.summary }}</p>
                 <p>Authors: {{ item.paper.authors }}</p>
                 <p>Publication Date: {{ item.paper.publication_date }}</p>
                 <p>Link: <a href="https://{{ item.paper.url }}">{{ item.paper.url }}</a></p>

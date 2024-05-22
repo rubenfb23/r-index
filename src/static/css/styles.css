@@ -92,10 +92,18 @@ form input[type="submit"]:hover {
     align-items: center;
     flex-direction: row;
     width: 95%;
+    align-items: flex-start;
 }
 
 .add-review {
     display: auto;
+}
+
+.summary {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .papers-container {
@@ -106,7 +114,7 @@ form input[type="submit"]:hover {
 }
 
 .paper-box {
-    width: 60%;
+    width: 70%;
     padding: 20px;
     margin: 10px 0;
     border: 1px solid #ddd;
