@@ -201,6 +201,7 @@ form input[type="submit"]:hover {
 
 .star {
     margin: 0 2px;
+    cursor: pointer;
 }
 
 .delete_btn {
