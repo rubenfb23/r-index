@@ -138,13 +138,13 @@ def index():
 @login_required
 def papers():
     """
-    Retrieves the papers associated with the current user and renders them on the 'papers.html' template.
+    Retrieves the papers associated with the current user as an author and renders them on the 'papers.html' template.
 
     Returns:
         The rendered 'papers.html' template with the retrieved papers.
     """
     user_id = current_user.get_id()
-    papers = list(s.filter(Paper, lambda p: p.authors == user_id))
+    papers = list(s.filter(Paper, lambda p: user_id in p.authors.split(", ")))
     for paper in papers:
         paper.__oid__ = s.safe_from_oid(paper.__oid__)
     return render_template('papers.html', papers=papers)

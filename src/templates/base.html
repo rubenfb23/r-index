@@ -19,9 +19,9 @@
         </div>
         <nav>
             <ul>
-                <li><a href="{{ url_for('index') }}">Home</a></li>
-                <li><a href="{{ url_for('papers') }}">Papers</a></li>
                 {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('papers') }}">Papers</a></li>
                     <li><a href="{{ url_for('add_paper') }}">Add Paper</a></li>
                 {% else %}
                     <li><a href="{{ url_for('login') }}">Login</a></li>

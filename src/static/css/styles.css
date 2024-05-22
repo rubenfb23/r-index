@@ -114,6 +114,10 @@ form input[type="submit"]:hover {
     min-width: 60%;
 }
 
+.comment {
+    text-emphasis: light;
+}
+
 .paper-box {
     width: 70%;
     padding: 20px;
