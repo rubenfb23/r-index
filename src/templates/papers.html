@@ -5,7 +5,9 @@
     <ul>
         {% for paper in papers %}
             <li>
-                <a href="{{ url_for('paper_detail', paper_id=paper.__oid__) }}">{{ paper.title }}</a>
+                <a href="{{ url_for('paper_detail', paper_id=paper.__oid__) }}">
+                    <button>{{ paper.title }}</button>
+                </a>
             </li>
         {% endfor %}
     </ul>
