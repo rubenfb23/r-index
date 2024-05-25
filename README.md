@@ -66,7 +66,7 @@ brew services start redis
 
 ## Lanzar la Aplicación
 
-### Ejecutar la Aplicación Flask
+### Ejecutar la Aplicación Flask en modo debug
 
 ```sh
 python run.py
@@ -99,6 +99,9 @@ python test_app.py
       edit_paper.html
       edit_post.html
     /static
+      /images
+        image.png
+        uvigpo.jpg
       /css
         styles.css
     /models
@@ -127,9 +130,9 @@ unittest
 
 1. **Registro**: Crea una cuenta en la página de registro.
 2. **Inicio de Sesión**: Inicia sesión con tus credenciales.
-3. **Agregar Paper**: Agrega un nuevo artículo científico.
+3. **Agregar Paper**: Agrega un nuevo artículo científico. Asegúrate de incluir un título, autores, año de publicación y resumen. LOS AUTORES DEBEN ESTAR REFERIDOS POR SUS ID DE USUARIO.
 4. **Ver Papers**: Navega por los artículos científicos y sus reseñas.
-5. **Agregar Reseña**: Agrega una reseña a un artículo científico.
+5. **Agregar Reseña**: Agrega una reseña a un artículo científico, no sea demasiado malo.
 
 ## Contribuir
 
