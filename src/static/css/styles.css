@@ -9,6 +9,8 @@ body {
 header {
     background-color: #e3f2fd;
     box-shadow: 0 5px 6px rgba(0, 0, 0, 0.1);
+    background-image: url('../images/paper.jpg');
+    background-repeat: repeat;
 }
 
 header h1 {
@@ -16,15 +18,20 @@ header h1 {
     padding: 0;
     text-align: center;
     color: #3f51b5;
+    font-size: 2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+nav {
+    background-color: #3f51b5;
+    padding: 10px;
 }
 
 nav ul {
     list-style-type: none;
     padding: 0;
     text-align: center;
-    background-color: #bbdefb;
     margin: 0;
-    padding: 10px 0;
 }
 
 nav ul li {
@@ -34,12 +41,15 @@ nav ul li {
 
 nav ul li a {
     text-decoration: none;
-    color: #3f51b5;
+    color: #ffffff;
     font-weight: bold;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 nav ul li a:hover {
-    color: #1a237e;
+    background-color: #1a237e;
 }
 
 main {
@@ -135,6 +145,7 @@ form input[type="submit"]:hover {
 
 .sponsors {
     margin-top: 1rem;
+
 }
 
 .header_header {
@@ -170,6 +181,8 @@ form input[type="submit"]:hover {
     flex-direction: column;
     align-items: center;
     padding: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
 }
 
 .paper-box h3 {

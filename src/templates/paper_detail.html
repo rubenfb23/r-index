@@ -18,13 +18,12 @@
         <p>Authors: {{ paper.authors }}</p>
         <p>Publication Date: {{ paper.publication_date }}</p>
         <p>URL: <a href="{{ paper.url }}">{{ paper.url }}</a></p>
-
+        <hr>
         {% if paper.authors == user.get_id() %}
             <form method="POST" class="form_dlt" action="{{ url_for('delete_paper', paper_id=paper.__oid__) }}" style="display:inline;">
                 <button type="submit" class="delete_btn">Delete Paper</button>
             </form>
         {% endif %}
-
         <div class="reviews">
             <h3>Reviews:</h3>
             {% for post in posts %}
