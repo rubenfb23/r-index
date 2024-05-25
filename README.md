@@ -85,8 +85,17 @@ python test_app.py
 ## Estructura del Proyecto
 
 ```
-/nombre_del_proyecto
-  /app
+/r-index
+  /doc
+    /class-diagram.png
+    /sequence_diagram_add_paper.png
+    /sequence_diagram_edit_paper.png
+    /sequence_diagram_login.png
+    /sequence_diagram_register.png
+    /sequence_diagram_index.png
+    /sequence_diagram_paper_detail.png
+    /sequence_diagram_papers.png
+  /src
     /templates
       base.html
       index.html
@@ -101,7 +110,7 @@ python test_app.py
     /static
       /images
         image.png
-        uvigpo.jpg
+        uvigo.jpg
       /css
         styles.css
     /models
