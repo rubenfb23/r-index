@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% block title %}Papers{% endblock %}
 {% block content %}
+    <!-- 
+        This template file displays a list of papers.
+        It uses a for loop to iterate over the 'papers' variable, which should be a list of paper objects.
+        For each paper, it creates a list item with a button that displays the paper's title.
+        The button is wrapped in an anchor tag that links to the 'paper_detail' view, passing the paper's ID as a parameter.
+    -->
     <h2>Papers</h2>
     <ul>
         {% for paper in papers %}

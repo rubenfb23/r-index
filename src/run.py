@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 import sirope
 from models import User, Paper, Post
+import sys
 
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'
@@ -382,4 +383,8 @@ def delete_post(post_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    if len(sys.argv) > 1 and sys.argv[1] == 'production':
+        app.debug = False
+    else:
+        app.debug = True
+    app.run()

@@ -1,13 +1,24 @@
 {% extends "base.html" %}
 {% block title %}{{ paper.title }}{% endblock %}
 {% block content %}
+    <!--
+        This template is used to display the details of a paper.
+        It includes the paper's title, summary, authors, publication date, and URL.
+        If the current user is the author of the paper, a delete button is displayed.
+        Below the paper details, the template displays a list of reviews for the paper.
+        Each review includes the user's rating, content, and timestamp.
+        If the current user is the author of a review, a delete button is displayed.
+        If the current user is the author of the paper, they cannot review their own paper.
+        If the current user has already reviewed the paper, a message is displayed.
+        Otherwise, a form is displayed to add a new review, including a textarea for the content and a star rating system.
+    -->
     <div class="paper-detail">
         <h2>{{ paper.title }}</h2>
         <p>{{ paper.summary }}</p>
         <p>Authors: {{ paper.authors }}</p>
         <p>Publication Date: {{ paper.publication_date }}</p>
         <p>URL: <a href="{{ paper.url }}">{{ paper.url }}</a></p>
-        
+
         {% if paper.authors == user.get_id() %}
             <form method="POST" class="form_dlt" action="{{ url_for('delete_paper', paper_id=paper.__oid__) }}" style="display:inline;">
                 <button type="submit" class="delete_btn">Delete Paper</button>

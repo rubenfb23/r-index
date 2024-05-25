@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% block title %}Add Paper{% endblock %}
 {% block content %}
+    <!-- 
+        This template represents a form for adding a new paper to the system.
+        It includes input fields for the paper's title, summary, URL, publication date, and authors.
+        The form is submitted using the POST method.
+    -->
+
     <h2>Add Paper</h2>
     <form method="post">
         <label for="title">Title:</label>
@@ -19,6 +25,5 @@
         <input type="text" placeholder="Enter the authors username, separate authors with commas" id="authors" name="authors" placeholder="Enter the authors">
         <br>
         <input type="submit" value="Add Paper">
-    </form>
     </form>
 {% endblock %}
